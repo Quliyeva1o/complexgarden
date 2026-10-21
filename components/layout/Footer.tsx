@@ -170,9 +170,11 @@ export async function Footer() {
         </Container>
 
         {/* Dekorativ iri brend adı (Canopy footer ruhu) */}
-        <p aria-hidden className="text-watermark pointer-events-none -mb-[0.12em] text-center whitespace-nowrap text-white/6 select-none">
-          {siteConfig.name}
-        </p>
+        <div
+          aria-hidden
+          data-text={siteConfig.name}
+          className="text-watermark pointer-events-none -mb-[0.12em] text-center whitespace-nowrap text-white/6 select-none before:content-[attr(data-text)]"
+        />
       </div>
     </footer>
   );

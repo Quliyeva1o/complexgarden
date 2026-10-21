@@ -17,12 +17,8 @@ import { localize } from "@/lib/utils";
 /** Yard hero-sundakı fırlanan dairəvi "aşağı" düyməsi — mətn dairə boyunca yazılır */
 function RotatingBadge({ text, label }: { text: string; label: string }) {
   return (
-    <a
-      href="#bolmeler"
-      aria-label={label}
-      className="group/badge absolute top-8 -left-10 hidden size-32 items-center justify-center rounded-pill bg-fresh text-on-fresh outline-none focus-visible:ring-2 focus-visible:ring-(--focus-ring) focus-visible:ring-offset-4 lg:flex"
-    >
-      <svg viewBox="0 0 120 120" aria-hidden className="animate-spin-slow absolute inset-0 size-full">
+    <div className="group/badge absolute top-8 -left-10 hidden size-32 items-center justify-center rounded-pill bg-fresh text-on-fresh lg:flex">
+      <svg viewBox="0 0 120 120" aria-hidden className="animate-spin-slow pointer-events-none absolute inset-0 size-full">
         <defs>
           <path id="hero-badge-circle" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" />
         </defs>
@@ -30,10 +26,14 @@ function RotatingBadge({ text, label }: { text: string; label: string }) {
           <textPath href="#hero-badge-circle">{text}</textPath>
         </text>
       </svg>
-      <span className="inline-flex size-11 items-center justify-center rounded-pill bg-primary text-on-primary transition-transform duration-300 ease-out group-hover/badge:translate-y-0.5">
+      <a
+        href="#bolmeler"
+        aria-label={label}
+        className="relative inline-flex size-11 items-center justify-center rounded-pill bg-primary text-on-primary outline-none transition-transform duration-300 ease-out group-hover/badge:translate-y-0.5 focus-visible:ring-2 focus-visible:ring-(--focus-ring) focus-visible:ring-offset-2"
+      >
         <ArrowDown aria-hidden className="size-5" />
-      </span>
-    </a>
+      </a>
+    </div>
   );
 }
 

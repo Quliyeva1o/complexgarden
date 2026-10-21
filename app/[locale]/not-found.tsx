@@ -20,10 +20,10 @@ export default async function NotFound() {
     <main id="main">
       <Section spacing="sm">
         <Container className="flex flex-col items-center gap-6 text-center">
-          <p aria-hidden className="text-watermark text-garden select-none">404</p>
+          <div aria-hidden data-text="404" className="text-watermark text-garden select-none before:content-[attr(data-text)]" />
           <h1 className="text-h1 -mt-4">{t("notFoundTitle")}</h1>
           <p className="max-w-xl text-lead">{t("notFoundText")}</p>
-          <SearchBox className="w-full max-w-xl text-left" />
+          <SearchBox className="w-full max-w-xl text-left" label={t("notFoundTitle")} />
           <div className="flex flex-wrap justify-center gap-3">
             <Button href={routes.home} arrow>
               {t("notFoundHome")}

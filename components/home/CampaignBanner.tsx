@@ -45,7 +45,7 @@ export async function CampaignBanner() {
             <Image src={img(campaign.image)} alt="" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
             {/* Endirim stikeri */}
             <span className="absolute top-6 right-6 flex size-28 -rotate-6 flex-col items-center justify-center rounded-pill bg-fresh text-on-fresh shadow-float">
-              <span className="font-heading text-h2 leading-none font-medium">−{campaign.discountPercent}%</span>
+              <span className="font-heading text-h2 leading-none font-medium text-on-fresh">−{campaign.discountPercent}%</span>
             </span>
           </div>
         </div>

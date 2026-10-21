@@ -27,7 +27,8 @@ export async function CategoryStrip() {
           title={t("categoriesTitle")}
           description={t("categoriesText")}
         />
-        <ul className="-mx-container-pad flex snap-x snap-mandatory gap-5 overflow-x-auto px-container-pad pb-2 [scrollbar-width:none] lg:mx-0 lg:justify-center lg:gap-8 lg:overflow-visible lg:px-0">
+        {/* scroll-padding = yan boşluq: snap başlanğıcda sürüşdürmür (yoxsa Chrome LCP-ni qeydə almır) */}
+        <ul className="-mx-container-pad flex snap-x snap-mandatory scroll-px-container-pad gap-5 overflow-x-auto px-container-pad pb-2 [scrollbar-width:none] lg:mx-0 lg:justify-center lg:gap-8 lg:overflow-visible lg:px-0">
           {categories.map((c) => (
             <li key={c.slug} className="snap-start">
               <CategoryCircle

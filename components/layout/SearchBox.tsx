@@ -19,13 +19,15 @@ type SearchBoxProps = {
   onNavigate?: () => void;
   /** true → nəticələr input-un altında axında göstərilir (mobil dialoqda kəsilməsin deyə) */
   inline?: boolean;
+  /** Səhifədə ikinci axtarış forması varsa fərqli ad (landmark-lar unikal olsun) */
+  label?: string;
 };
 
 /**
  * Axtarış + yazdıqca təkliflər (ARIA combobox). ↑/↓ seçir, Enter açır, Esc bağlayır.
  * Seçim olmadan Enter → axtarış nəticələri səhifəsi.
  */
-export function SearchBox({ className, autoFocus, onNavigate, inline = false }: SearchBoxProps) {
+export function SearchBox({ className, autoFocus, onNavigate, inline = false, label }: SearchBoxProps) {
   const t = useTranslations("Header");
   const locale = useLocale();
   const router = useRouter();
@@ -107,6 +109,7 @@ export function SearchBox({ className, autoFocus, onNavigate, inline = false }: 
     <div className={cn("relative", className)}>
       <form
         role="search"
+        aria-label={label ?? t("searchLabel")}
         onSubmit={(e) => {
           e.preventDefault();
           if (active >= 0 && options[active]) go(options[active].href);

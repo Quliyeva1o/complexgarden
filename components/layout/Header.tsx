@@ -10,6 +10,7 @@ import { localize } from "@/lib/utils";
 import { HeaderActions } from "./HeaderActions";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { Logo } from "./Logo";
+import { LogoFontPicker } from "./LogoFontPicker";
 import { MegaMenu } from "./MegaMenu";
 import { MenuButton, MobileMenu, MobileSearch } from "./MobileMenu";
 import { SearchBox } from "./SearchBox";
@@ -56,10 +57,19 @@ export async function getNavData() {
 
 export async function Header() {
   const t = await getTranslations("Header");
+  const tc = await getTranslations("Common");
   const { categories, links, campaign } = await getNavData();
 
   return (
     <>
+      <a
+        href="#main"
+        className="sr-only z-50 rounded-pill bg-primary px-5 py-3 font-medium text-on-primary focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+      >
+        {tc("skipToContent")}
+      </a>
+      {/* display: contents — landmark qalır, amma sticky hissə body-yə nisbətən yapışmağa davam edir */}
+      <header className="contents">
       {/* 1. Üst zolaq — sürüşəndə yuxarıda qalmır */}
       <div className="on-dark bg-primary text-white">
         <Container className="flex h-10 items-center justify-center gap-6 text-small lg:justify-between">
@@ -94,6 +104,7 @@ export async function Header() {
           <div className="relative z-20 flex h-16 items-center gap-3 rounded-pill border border-border bg-surface/95 pr-2 pl-2 backdrop-blur transition-[height,box-shadow] duration-300 ease-out group-data-scrolled/header:shadow-float sm:pl-5 lg:h-18 lg:gap-6 lg:pr-2.5 lg:group-data-scrolled/header:h-16">
             <MenuButton />
             <Logo />
+            {siteConfig.logo.fontPicker && <LogoFontPicker />}
             <SearchBox className="ml-auto hidden max-w-xl flex-1 md:block" />
             <div className="ml-auto md:ml-0">
               <HeaderActions />
@@ -105,6 +116,7 @@ export async function Header() {
           </div>
         </Container>
       </StickyHeader>
+      </header>
 
       <MobileMenu categories={categories} links={links} />
       <MobileSearch />

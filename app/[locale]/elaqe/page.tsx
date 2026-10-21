@@ -7,10 +7,13 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { siteConfig } from "@/config/site";
 import type { Locale } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
+import { routes } from "@/config/routes";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Pages");
-  return { title: t("contactTitle"), description: t("contactLead") };
+  const locale = (await getLocale()) as Locale;
+  return pageMetadata({ path: routes.contact, locale, title: t("contactTitle"), description: t("contactLead") });
 }
 
 function Channel({ icon: Icon, label, value, href, external }: { icon: LucideIcon; label: string; value: string; href?: string; external?: boolean }) {

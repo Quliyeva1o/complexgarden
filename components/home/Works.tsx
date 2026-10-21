@@ -39,6 +39,7 @@ export async function Works() {
         </div>
 
         <ReviewsCarousel
+          label={t("reviewsTitle")}
           prevLabel={t("reviewsPrev")}
           nextLabel={t("reviewsNext")}
           header={
@@ -58,7 +59,7 @@ export async function Works() {
               className="flex w-[85%] shrink-0 snap-start flex-col gap-5 rounded-hero border border-border bg-surface p-6 sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]"
             >
               <div className="flex items-center justify-between">
-                <span className="inline-flex gap-0.5 text-primary" aria-label={`${r.rating}/5`}>
+                <span role="img" className="inline-flex gap-0.5 text-primary" aria-label={`${r.rating}/5`}>
                   {Array.from({ length: r.rating }, (_, i) => (
                     <Star key={i} aria-hidden className="size-4 fill-current" />
                   ))}

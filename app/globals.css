@@ -21,9 +21,9 @@
 
 :root,
 [data-theme="forest-lagoon"] {
-  --color-primary: #1E4634;        /* meşə yaşılı: başlıqlar, əsas düymələr, footer */
-  --color-primary-hover: #163527;
-  --color-secondary: #0E6F78;      /* dərin firuzəyi: hovuz bölməsi, linklər, ikinci düymələr */
+  --color-primary: #153D2E;        /* loqonun yaşılı: başlıqlar, əsas düymələr, header menyusu, footer */
+  --color-primary-hover: #0E2C21;
+  --color-secondary: #05697B;      /* loqonun firuzəyisi (dalğa): hovuz bölməsi, linklər, ikinci düymələr */
   --color-accent: #4CC3CF;         /* laguna: ikonlar, nişanlar, dekor (MƏTN ÜÇÜN DEYİL) */
   --color-fresh: #C8E66B;          /* təzə yarpaq: endirim nişanları, kampaniya düymələri */
   --color-on-fresh: #2C3A0A;
@@ -287,7 +287,8 @@
    ========================================================================== */
 
 @keyframes spin-slow { to { transform: rotate(360deg); } }
-@keyframes reveal-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+/* Yalnız sürüşmə — şəffaflıq yoxdur: məzmun hər an oxunaqlı qalır (kontrast yoxlamaları və yavaş cihazlar üçün) */
+@keyframes reveal-up { from { transform: translateY(32px); } to { transform: none; } }
 
 @layer components {
   .animate-spin-slow { animation: spin-slow 18s linear infinite; }
@@ -349,3 +350,33 @@
   .world-pool   { --world-bg: var(--bg-pool);   --world-ink: var(--color-secondary); }
   .world-garden { --world-bg: var(--bg-garden); --world-ink: var(--color-primary); }
 }
+
+/* ------------------------------------------------------------------
+   Loqo yazısı — şrift <html data-logo-font> ilə seçilir
+   (variantlar: components/layout/logo-fonts.ts, default: config/site.ts → logo.font)
+   ------------------------------------------------------------------ */
+.logo-name {
+  font-family: var(--logo-name-font);
+  font-weight: var(--logo-name-weight, 700);
+  letter-spacing: var(--logo-name-tracking, -0.01em);
+  /* Əlyazma şriftlərinin kiçik x-hündürlüyünü bərabərləşdirir */
+  font-size-adjust: var(--logo-name-adjust, none);
+}
+.logo-tagline {
+  /* Əlyazma şriftlərinin quyruqları (p, x) alt yazıya dəyməsin deyə orada böyüyür */
+  margin-top: var(--logo-tag-gap, 0.375rem);
+  font-family: var(--logo-tag-font, var(--font-logo-jakarta));
+  font-weight: var(--logo-tag-weight, 500);
+  letter-spacing: var(--logo-tag-tracking, 0.28em);
+  text-transform: uppercase;
+}
+
+[data-logo-font="jakarta"]  { --logo-name-font: var(--font-logo-jakarta); --logo-name-tracking: -0.02em; }
+[data-logo-font="outfit"]   { --logo-name-font: var(--font-logo-outfit); --logo-name-weight: 600;
+                              --logo-tag-font: var(--font-logo-outfit); --logo-tag-weight: 400; --logo-tag-tracking: 0.3em; }
+[data-logo-font="lexend"]   { --logo-name-font: var(--font-logo-lexend); --logo-name-weight: 500; --logo-name-tracking: -0.02em;
+                              --logo-tag-font: var(--font-logo-lexend); --logo-tag-weight: 400; --logo-tag-tracking: 0.3em; }
+[data-logo-font="pacifico"] { --logo-name-font: var(--font-logo-pacifico); --logo-name-weight: 400; --logo-name-tracking: 0;
+                              --logo-name-adjust: 0.48; --logo-tag-gap: 0.7rem; }
+[data-logo-font="vibes"]    { --logo-name-font: var(--font-logo-vibes); --logo-name-weight: 400; --logo-name-tracking: 0;
+                              --logo-name-adjust: 0.48; --logo-tag-gap: 0.6rem; }

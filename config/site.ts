@@ -1,6 +1,6 @@
 /**
  * Saytın əsas konfiqurasiyası — brend adı, əlaqə, çatdırılma və tema bir yerdən idarə olunur.
- * Brend adı hələlik müvəqqətidir: yalnız `name` sahəsini dəyişmək kifayətdir.
+ * Brend adı və loqo faylları buradan idarə olunur (public/brand, public/icons).
  */
 
 /**
@@ -12,12 +12,40 @@ export const FREE_DELIVERY_THRESHOLD_AZN = 150;
 /** Hədd altında çatdırılma haqqı (AZN) */
 export const DELIVERY_FEE_AZN = 7;
 
+/** Loqo yazısının şrift variantları (yükləmə: components/layout/logo-fonts.ts, üslub: globals.css) */
+export const logoFontLabels = {
+  jakarta: "Plus Jakarta Sans",
+  outfit: "Outfit",
+  lexend: "Lexend",
+  pacifico: "Pacifico",
+  vibes: "Great Vibes",
+} as const;
+export type LogoFont = keyof typeof logoFontLabels;
+export const logoFonts = Object.keys(logoFontLabels) as LogoFont[];
+
 export const themes = ["forest-lagoon", "soft-coast"] as const;
 export type ThemeName = (typeof themes)[number];
 
 export const siteConfig = {
-  name: "BRAND_NAME",
-  url: "https://example.az",
+  name: "Complex Garden",
+  tagline: "Garden & Pool",
+  /** Loqo faylları — public/brand (orijinallar public/brand/original-da) */
+  logo: {
+    /** Yalnız işarə (palma + dalğa), şəffaf fon (237×256). Yanındakı yazı mətndir — bax `font` */
+    mark: "/brand/logo-mark.png",
+    markSize: { width: 237, height: 256 },
+    /**
+     * Yanındakı yazının ("Complex Garden / Garden & Pool") şrifti. Yazı şəkil deyil, mətndir —
+     * dəyişmək üçün bu dəyəri `logoFontLabels`-dəki açarlardan biri edin.
+     */
+    font: "jakarta" as LogoFont,
+    /** Header-də loqonun yanında şrift dəyişdirmə düyməsi (seçim üçün müvəqqəti) — seçimdən sonra `false` */
+    fontPicker: true,
+    /** Sosial şəbəkə paylaşımı üçün (1200×630) */
+    og: "/brand/og-image.jpg",
+  },
+  /** Saytın əsas ünvanı (canonical, sitemap, Open Graph). Produksiyada NEXT_PUBLIC_SITE_URL ilə təyin edin */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.az",
 
   phone: "+994 12 555 00 00",
   phoneHref: "tel:+994125550000",

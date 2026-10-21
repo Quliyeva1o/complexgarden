@@ -18,6 +18,7 @@ import { siteConfig } from "@/config/site";
 import { routing, type Locale } from "@/i18n/routing";
 import { catalog } from "@/lib/data";
 import { localize } from "@/lib/utils";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const services = await catalog.getServices();
@@ -33,11 +34,13 @@ async function resolve(params: PageProps<"/[locale]/xidmetler/[slug]">["params"]
 export async function generateMetadata({ params }: PageProps<"/[locale]/xidmetler/[slug]">): Promise<Metadata> {
   const { locale, service } = await resolve(params);
   if (!service) return {};
-  return {
+  return pageMetadata({
+    path: routes.service(service.slug),
+    locale,
     title: localize(service.name, locale),
     description: localize(service.summary, locale),
-    alternates: { languages: Object.fromEntries(routing.locales.map((l) => [l, `/${l}${routes.service(service.slug)}`])) },
-  };
+    image: img(service.image),
+  });
 }
 
 async function ServiceContent({ params }: { params: PageProps<"/[locale]/xidmetler/[slug]">["params"] }) {

@@ -42,6 +42,7 @@ export function useCounts() {
 /** Desktop: seçilmişlər + hesab ikonları və lime "Səbət" pill-i (Farmio CTA ruhu) */
 export function HeaderActions() {
   const t = useTranslations("Header");
+  const tc = useTranslations("Common");
   const counts = useCounts();
 
   return (
@@ -60,10 +61,9 @@ export function HeaderActions() {
         <CountDot count={counts.cart} />
       </Link>
 
-      {/* Desktop: lime pill, sağda tünd dairədə say */}
+      {/* Desktop: lime pill, sağda tünd dairədə say. Əlçatan ad görünən mətndən qurulur: "Səbət 0 məhsul" */}
       <Link
         href={routes.cart}
-        aria-label={t("cartCount", { count: counts.cart })}
         className={cn(
           "ml-2 hidden h-12 items-center gap-3 rounded-pill bg-fresh pr-1.5 pl-5 font-medium text-on-fresh md:inline-flex",
           "transition-colors duration-300 ease-out hover:bg-fresh-hover outline-none",
@@ -75,6 +75,7 @@ export function HeaderActions() {
         <span className="inline-flex size-9 items-center justify-center rounded-pill bg-primary text-small font-semibold text-on-primary tabular-nums">
           {counts.cart}
         </span>
+        <span className="sr-only">{tc("products", { count: counts.cart }).replace(/^\d+\s*/, "")}</span>
       </Link>
     </div>
   );

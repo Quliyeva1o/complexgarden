@@ -18,6 +18,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { catalog } from "@/lib/data";
 import { formatDayMonthYear } from "@/lib/format";
 import { localize } from "@/lib/utils";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const articles = await catalog.getArticles();
@@ -34,12 +35,8 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/beledcil
   const { locale, article } = await resolve(params);
   if (!article) return {};
   const title = localize(article.title, locale);
-  return {
-    title,
-    description: localize(article.excerpt, locale),
-    alternates: { languages: Object.fromEntries(routing.locales.map((l) => [l, `/${l}${routes.guide(article.slug)}`])) },
-    openGraph: { type: "article", title, images: [img(article.image)], publishedTime: article.publishedAt },
-  };
+  const meta = pageMetadata({ path: routes.guide(article.slug), locale, title, description: localize(article.excerpt, locale), image: img(article.image), type: "article" });
+  return { ...meta, openGraph: { ...meta.openGraph, type: "article", publishedTime: article.publishedAt } };
 }
 
 async function ArticleContent({ params }: { params: PageProps<"/[locale]/beledciler/[slug]">["params"] }) {

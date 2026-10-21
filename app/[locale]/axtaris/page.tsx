@@ -44,7 +44,7 @@ async function SearchResults({ searchParams }: { searchParams: Promise<SearchPar
         <h1 className="text-h1">{q ? t("searchResultsFor", { q }) : t("allProducts")}</h1>
         {!q && <p className="max-w-2xl text-lead">{t("allProductsText")}</p>}
 
-        <form action="" method="get" role="search" className="flex max-w-xl gap-2">
+        <form action="" method="get" role="search" aria-label={t("searchTitle")} className="flex max-w-xl gap-2">
           <label htmlFor="search-page-q" className="sr-only">
             {t("searchPlaceholder")}
           </label>

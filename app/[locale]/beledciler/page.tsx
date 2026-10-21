@@ -12,10 +12,12 @@ import type { Locale } from "@/i18n/routing";
 import { catalog } from "@/lib/data";
 import { formatDayMonthYear } from "@/lib/format";
 import { cn, localize } from "@/lib/utils";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Pages");
-  return { title: t("guidesTitle"), description: t("guidesLead") };
+  const locale = (await getLocale()) as Locale;
+  return pageMetadata({ path: routes.guides, locale, title: t("guidesTitle"), description: t("guidesLead") });
 }
 
 export default async function GuidesPage() {

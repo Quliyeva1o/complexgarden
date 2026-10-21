@@ -12,12 +12,12 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { img } from "@/config/images";
 import { routes } from "@/config/routes";
-import { siteConfig } from "@/config/site";
 import { hasLocale } from "next-intl";
 import { routing, type Locale } from "@/i18n/routing";
 import { catalog, parseCatalogParams, type SearchParamsRecord } from "@/lib/data";
 import type { Category } from "@/lib/types";
 import { localize } from "@/lib/utils";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const categories = await catalog.getCategories();
@@ -36,15 +36,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/kateqori
   if (!category) return {};
   const name = localize(category.name, locale);
   const description = localize(category.description, locale);
-  return {
-    title: name,
-    description,
-    alternates: {
-      canonical: `/${locale}${routes.category(category.slug)}`,
-      languages: Object.fromEntries(routing.locales.map((l) => [l, `/${l}${routes.category(category.slug)}`])),
-    },
-    openGraph: { title: `${name} — ${siteConfig.name}`, description, images: [img(category.image)] },
-  };
+  return pageMetadata({ path: routes.category(category.slug), locale, title: name, description, image: img(category.image) });
 }
 
 /** Filtrli nəticələr — searchParams runtime məlumatıdır, ona görə Suspense içində */

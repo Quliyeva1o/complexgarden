@@ -262,9 +262,9 @@ export function CatalogToolbar() {
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
-      <p className="text-body text-ink-strong" aria-live="polite">
+      <h2 className="text-body font-normal text-ink-strong" aria-live="polite">
         {t("results", { count: total })}
-      </p>
+      </h2>
 
       <div className="flex items-center gap-2">
         <Button variant="outline" size="sm" onClick={() => setOpen(true)} className="lg:hidden" aria-haspopup="dialog">

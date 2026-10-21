@@ -32,11 +32,12 @@ export async function Subscriptions({ cta = "page", showHeading = true }: Subscr
   return (
     <Section id="abune" spacing={showHeading ? "default" : "none"} className={showHeading ? "reveal" : "pb-section-sm"}>
       <Container>
+        {!showHeading && <h2 className="sr-only">{t("subTitle")}</h2>}
         {showHeading && (
           <SectionHeading align="center" eyebrow={t("subEyebrow")} eyebrowIcon={Repeat} title={t("subTitle")} description={t("subText")} />
         )}
 
-        <ul className="grid items-stretch gap-grid md:grid-cols-3">
+        <ul className="grid items-stretch gap-grid lg:grid-cols-3">
           {plans.map((plan) => {
             const popular = Boolean(plan.popular);
             const save = Math.round((1 - plan.monthlyPrice / plan.regularPrice) * 100);
@@ -49,7 +50,7 @@ export async function Subscriptions({ cta = "page", showHeading = true }: Subscr
                 className={cn(
                   "scroll-mt-44",
                   "relative flex flex-col gap-6 rounded-hero p-6 sm:p-8",
-                  popular ? "on-dark bg-primary md:-my-4 md:py-12" : "border border-border bg-surface",
+                  popular ? "on-dark bg-primary lg:-my-4 lg:py-12" : "border border-border bg-surface",
                 )}
               >
                 {popular && (

@@ -23,6 +23,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { catalog } from "@/lib/data";
 import type { Category, Product } from "@/lib/types";
 import { localize } from "@/lib/utils";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const products = await catalog.getProducts();
@@ -41,15 +42,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/mehsul/[
   if (!product) return {};
   const name = localize(product.name, locale);
   const description = localize(product.description, locale);
-  return {
-    title: name,
-    description,
-    alternates: {
-      canonical: `/${locale}${routes.product(product.slug)}`,
-      languages: Object.fromEntries(routing.locales.map((l) => [l, `/${l}${routes.product(product.slug)}`])),
-    },
-    openGraph: { title: `${name} — ${siteConfig.name}`, description, images: product.images.map((i) => img(i)) },
-  };
+  return pageMetadata({ path: routes.product(product.slug), locale, title: name, description, image: img(product.images[0]) });
 }
 
 /** Kartlardan ibarət sıra ("Birlikdə alınır", "Oxşar məhsullar") */
@@ -261,7 +254,7 @@ async function ProductContent({ params }: { params: PageProps<"/[locale]/mehsul/
                       <ul className="grid gap-4 md:grid-cols-2">
                         {reviews.items.slice(0, 4).map((r) => (
                           <li key={r.id} className="flex flex-col gap-3 rounded-card border border-border bg-page p-5">
-                            <span className="inline-flex gap-0.5 text-primary" aria-label={`${r.rating}/5`}>
+                            <span role="img" className="inline-flex gap-0.5 text-primary" aria-label={`${r.rating}/5`}>
                               {Array.from({ length: r.rating }, (_, i) => (
                                 <Star key={i} aria-hidden className="size-3.5 fill-current" />
                               ))}

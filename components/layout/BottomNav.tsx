@@ -15,7 +15,7 @@ const itemClass = (active: boolean) =>
     active ? "bg-fresh text-on-fresh" : "text-white/80 hover:text-white",
   );
 
-function Item({ icon: Icon, label, badge }: { icon: LucideIcon; label: string; badge?: number }) {
+function Item({ icon: Icon, label, badge, badgeLabel }: { icon: LucideIcon; label: string; badge?: number; badgeLabel?: string }) {
   return (
     <>
       <span className="relative">
@@ -27,6 +27,8 @@ function Item({ icon: Icon, label, badge }: { icon: LucideIcon; label: string; b
         ) : null}
       </span>
       {label}
+      {/* Görünən ad + say ekran oxuyucu üçün: "Səbət 2 məhsul" */}
+      {badge ? <span className="sr-only">{badgeLabel}</span> : null}
     </>
   );
 }
@@ -37,6 +39,7 @@ function Item({ icon: Icon, label, badge }: { icon: LucideIcon; label: string; b
  */
 export function BottomNav() {
   const t = useTranslations("Header");
+  const tc = useTranslations("Common");
   const pathname = usePathname();
   const { cart } = useCounts();
   const { menuOpen, searchOpen, setMenuOpen, setSearchOpen } = useUi();
@@ -65,11 +68,10 @@ export function BottomNav() {
         <li className="flex flex-1">
           <Link
             href={routes.cart}
-            aria-label={t("cartCount", { count: cart })}
             aria-current={pathname === routes.cart ? "page" : undefined}
             className={itemClass(pathname === routes.cart)}
           >
-            <Item icon={ShoppingBag} label={t("cart")} badge={cart} />
+            <Item icon={ShoppingBag} label={t("cart")} badge={cart} badgeLabel={tc("products", { count: cart })} />
           </Link>
         </li>
         <li className="flex flex-1">

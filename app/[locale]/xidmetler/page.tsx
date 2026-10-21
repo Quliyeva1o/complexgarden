@@ -14,10 +14,12 @@ import type { Locale } from "@/i18n/routing";
 import { catalog } from "@/lib/data";
 import { serviceIcons } from "@/lib/service-icons";
 import { localize } from "@/lib/utils";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Pages");
-  return { title: t("servicesTitle"), description: t("servicesLead") };
+  const locale = (await getLocale()) as Locale;
+  return pageMetadata({ path: routes.services, locale, title: t("servicesTitle"), description: t("servicesLead") });
 }
 
 export default async function ServicesPage() {

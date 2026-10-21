@@ -12,10 +12,13 @@ import { img } from "@/config/images";
 import type { Locale } from "@/i18n/routing";
 import { catalog } from "@/lib/data";
 import { localize } from "@/lib/utils";
+import { pageMetadata } from "@/lib/seo";
+import { routes } from "@/config/routes";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Pages");
-  return { title: t("campaignsTitle"), description: t("campaignsLead") };
+  const locale = (await getLocale()) as Locale;
+  return pageMetadata({ path: routes.campaigns, locale, title: t("campaignsTitle"), description: t("campaignsLead") });
 }
 
 export default async function CampaignsPage() {

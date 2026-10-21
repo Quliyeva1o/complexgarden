@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 
 type ReviewsCarouselProps = {
   children: ReactNode;
+  /** Sürüşən siyahının adı (klaviatura fokusu üçün) */
+  label: string;
   prevLabel: string;
   nextLabel: string;
   header: ReactNode;
@@ -20,7 +22,7 @@ const arrowClass = cn(
  * Rəy karuseli: scroll-snap ilə sürüşür (toxunma və trackpad), oxlar bir kart qədər keçir.
  * Avtomatik fırlanmır — oxumağa mane olmur (WAI: hərəkət edən məzmun istifadəçinin nəzarətində).
  */
-export function ReviewsCarousel({ children, prevLabel, nextLabel, header }: ReviewsCarouselProps) {
+export function ReviewsCarousel({ children, prevLabel, nextLabel, header, label }: ReviewsCarouselProps) {
   const track = useRef<HTMLUListElement>(null);
 
   const scroll = (direction: 1 | -1) => {
@@ -44,9 +46,12 @@ export function ReviewsCarousel({ children, prevLabel, nextLabel, header }: Revi
           </button>
         </div>
       </div>
+      {/* scroll-padding = yan boşluq: snap başlanğıcda sürüşdürmür (yoxsa Chrome LCP-ni qeydə almır) */}
       <ul
         ref={track}
-        className="-mx-container-pad flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-container-pad pb-2 [scrollbar-width:none] lg:mx-0 lg:px-0"
+        tabIndex={0}
+        aria-label={label}
+        className="-mx-container-pad flex snap-x snap-mandatory scroll-px-container-pad gap-6 overflow-x-auto scroll-smooth px-container-pad pb-2 outline-none [scrollbar-width:none] focus-visible:ring-2 focus-visible:ring-(--focus-ring) lg:mx-0 lg:px-0"
       >
         {children}
       </ul>
