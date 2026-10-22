@@ -1,4 +1,4 @@
-import type { ImageKey } from "@/config/images";
+import type { ImageKey, ImageRef } from "@/config/images";
 import type { Locale } from "@/i18n/routing";
 
 /** Hər dildə mətn: { az, ru, en } */
@@ -64,7 +64,7 @@ export interface Category {
   description: Localized;
   world: World;
   active: boolean;
-  image: ImageKey;
+  image: ImageRef;
   subcategories: Subcategory[];
   filters: FilterDefinition[];
   order: number;
@@ -109,7 +109,7 @@ export interface Product {
   /** AZN */
   price: number;
   oldPrice?: number;
-  images: ImageKey[];
+  images: ImageRef[];
   badges?: ProductBadge[];
   inStock: boolean;
   /** Sifarişlə gələn məhsullar üçün tədarük müddəti (gün) */

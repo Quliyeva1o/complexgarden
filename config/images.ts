@@ -66,6 +66,15 @@ export const images = {
 
 export type ImageKey = keyof typeof images;
 
-export function img(key: ImageKey): string {
-  return images[key];
+/** Şəkil istinadı: `images` açarı, tam URL və ya Supabase Storage yolu (admin paneldən yüklənən) */
+export type ImageRef = ImageKey | (string & {});
+
+export const PRODUCT_IMAGES_BUCKET = "product-images";
+
+export function img(ref: ImageRef): string {
+  if (ref in images) return images[ref as ImageKey];
+  if (/^https?:\/\//.test(ref)) return ref;
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const path = ref.replace(/^\/+/, "");
+  return base ? `${base}/storage/v1/object/public/${PRODUCT_IMAGES_BUCKET}/${path}` : `/${path}`;
 }
