@@ -43,7 +43,13 @@ export async function requestPasswordReset(_prev: FormState, formData: FormData)
   const { error } = await db.auth.resetPasswordForEmail(parsed.data.email, {
     redirectTo: `${await requestOrigin()}${ADMIN_AUTH_CALLBACK}`,
   });
-  if (error) console.error("Şifrə bərpası:", error.message);
+  if (error) {
+    console.error("Şifrə bərpası:", error.message);
+    // Limit xətası e-poçtun mövcudluğunu açmır — istifadəçiyə açıq deyirik
+    if (error.status === 429 || /rate limit/i.test(error.message)) {
+      return { status: "error", message: "Çox sorğu göndərilib. Təxminən bir saat sonra yenidən cəhd edin." };
+    }
+  }
   // E-poçtun mövcudluğunu bildirmirik
   return {
     status: "success",

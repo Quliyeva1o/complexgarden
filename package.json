@@ -12,7 +12,8 @@
     "test": "vitest run",
     "seed": "tsx --env-file=.env.local scripts/seed-supabase.ts",
     "check:rls": "tsx --env-file=.env.local scripts/check-rls.ts",
-    "admin:invite": "tsx --env-file=.env.local scripts/admin-invite.ts"
+    "admin:invite": "tsx --env-file=.env.local scripts/admin-invite.ts",
+    "admin:link": "tsx --env-file=.env.local scripts/admin-link.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
