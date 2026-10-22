@@ -10,7 +10,7 @@ const STORAGE_KEY = "logo-font";
 /**
  * Müvəqqəti: loqo yazısının şriftini sayt üzərində sınamaq üçün düymə.
  * Hər klik növbəti varianta keçir (Shift+klik — əvvəlkinə), seçim brauzerdə yadda qalır.
- * Mobildə gizlidir (header-də yer yoxdur). Söndürmək: config/site.ts → `logo.fontPicker: false`.
+ * 1024px-dən dar ekranlarda gizlidir (header-də yer yoxdur). Söndürmək: config/site.ts → `logo.fontPicker: false`.
  */
 export function LogoFontPicker({ className }: { className?: string }) {
   const [font, setFont] = useState<LogoFont>(siteConfig.logo.font);
@@ -43,7 +43,7 @@ export function LogoFontPicker({ className }: { className?: string }) {
       }}
       title="Loqo şriftini dəyiş (Shift+klik — əvvəlki)"
       className={cn(
-        "hidden h-9 shrink-0 items-center gap-2 rounded-pill sm:inline-flex border border-dashed border-primary/40 px-2.5 text-caption text-primary outline-none hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-(--focus-ring)",
+        "hidden h-9 shrink-0 items-center gap-2 rounded-pill lg:inline-flex border border-dashed border-primary/40 px-2.5 text-caption text-primary outline-none hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-(--focus-ring)",
         className,
       )}
     >

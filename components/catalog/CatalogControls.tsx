@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Pill } from "@/components/ui/Pill";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { countActiveFilters, productSorts, serializeCatalogQuery, type FacetCounts, type ProductQuery, type ProductSort } from "@/lib/data";
+// Birbaşa fayllardan: `@/lib/data` server məlumat mənbəyini (Supabase, "use cache") da yükləyir
+import { productSorts, type FacetCounts, type ProductQuery, type ProductSort } from "@/lib/data/query";
+import { countActiveFilters, serializeCatalogQuery } from "@/lib/data/url-query";
 import { cn } from "@/lib/utils";
 
 /* -------------------------------------------------------------------------- */
