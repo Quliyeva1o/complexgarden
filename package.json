@@ -9,9 +9,12 @@
     "lint": "eslint",
     "validate:data": "tsx scripts/validate-data.ts",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "seed": "tsx --env-file=.env.local scripts/seed-supabase.ts",
+    "check:rls": "tsx --env-file=.env.local scripts/check-rls.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.60.0",
@@ -19,6 +22,7 @@
     "next-intl": "^4.14.9",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "server-only": "^0.0.1",
     "tailwind-merge": "^3.7.0",
     "zustand": "^5.0.15"
   },
