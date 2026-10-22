@@ -3,6 +3,8 @@
 import { refresh } from "next/cache";
 import { createServiceClient } from "@/lib/supabase/service";
 import { writeAudit } from "./audit";
+import { requestOrigin } from "./origin";
+import { ADMIN_AUTH_CALLBACK } from "./paths";
 import { requireAdmin } from "./session";
 import { fieldErrors, inviteSchema, type FormState } from "./validation";
 
@@ -13,7 +15,10 @@ export async function inviteAdmin(_prev: FormState, formData: FormData): Promise
   const { name, email } = parsed.data;
 
   const service = createServiceClient();
-  const invited = await service.auth.admin.inviteUserByEmail(email, { data: { name } });
+  const invited = await service.auth.admin.inviteUserByEmail(email, {
+    data: { name },
+    redirectTo: `${await requestOrigin()}${ADMIN_AUTH_CALLBACK}`,
+  });
   if (invited.error) {
     const exists = /already|registered|exists/i.test(invited.error.message);
     return {

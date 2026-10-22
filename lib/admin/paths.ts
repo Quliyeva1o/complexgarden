@@ -1,9 +1,11 @@
 export const ADMIN_HOME = "/admin";
 export const ADMIN_LOGIN = "/admin/giris";
 export const ADMIN_SET_PASSWORD = "/admin/sifre-teyin";
+/** Dəvət və şifrə bərpası linkləri buraya qayıdır (Supabase standart şablonları) */
+export const ADMIN_AUTH_CALLBACK = "/admin/auth/callback";
 
-/** Sessiyasız açılan admin səhifələri */
-const PUBLIC_ADMIN_PATHS = [ADMIN_LOGIN, "/admin/sifre-berpa", "/admin/auth/confirm"];
+/** Sessiyasız açılan admin səhifələri (/admin/auth — e-poçt linklərinin qəbulu) */
+const PUBLIC_ADMIN_PATHS = [ADMIN_LOGIN, "/admin/sifre-berpa", "/admin/auth"];
 
 export function isAdminPath(pathname: string): boolean {
   return pathname === ADMIN_HOME || pathname.startsWith(`${ADMIN_HOME}/`);

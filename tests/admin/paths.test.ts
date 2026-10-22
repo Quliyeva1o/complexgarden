@@ -13,6 +13,7 @@ describe("admin paths", () => {
     expect(isPublicAdminPath("/admin/giris")).toBe(true);
     expect(isPublicAdminPath("/admin/sifre-berpa")).toBe(true);
     expect(isPublicAdminPath("/admin/auth/confirm")).toBe(true);
+    expect(isPublicAdminPath("/admin/auth/callback")).toBe(true);
     expect(isPublicAdminPath("/admin")).toBe(false);
     expect(isPublicAdminPath("/admin/sifre-teyin")).toBe(false);
   });

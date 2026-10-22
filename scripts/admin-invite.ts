@@ -13,7 +13,12 @@ async function main() {
   const db = createClient(env.url, supabaseSecretKey(), { auth: { persistSession: false } });
 
   let userId: string | undefined;
-  const invited = await db.auth.admin.inviteUserByEmail(email, { data: { name } });
+  // Dəvət linki saytın /admin/auth/callback səhifəsinə qayıdır (yayımda ADMIN_SITE_URL=https://domen)
+  const site = process.env.ADMIN_SITE_URL ?? "http://localhost:3000";
+  const invited = await db.auth.admin.inviteUserByEmail(email, {
+    data: { name },
+    redirectTo: `${site}/admin/auth/callback`,
+  });
   if (invited.error) {
     const { data } = await db.auth.admin.listUsers({ perPage: 200 });
     userId = data.users.find((u) => u.email?.toLowerCase() === email.toLowerCase())?.id;

@@ -2,7 +2,8 @@
 
 import { redirect } from "next/navigation";
 import { createServerSupabase } from "@/lib/supabase/server";
-import { ADMIN_HOME, ADMIN_LOGIN, safeNextPath } from "./paths";
+import { requestOrigin } from "./origin";
+import { ADMIN_AUTH_CALLBACK, ADMIN_HOME, ADMIN_LOGIN, safeNextPath } from "./paths";
 import { getAdminSession, requireAdmin } from "./session";
 import {
   fieldErrors,
@@ -38,8 +39,11 @@ export async function requestPasswordReset(_prev: FormState, formData: FormData)
   if (!parsed.success) return { status: "error", errors: fieldErrors(parsed.error) };
 
   const db = await createServerSupabase();
-  // Link e-poçt şablonundadır: {{ .SiteURL }}/admin/auth/confirm?token_hash=…&type=recovery
-  await db.auth.resetPasswordForEmail(parsed.data.email);
+  // Standart şablon linki bura `?code=` ilə qayıdır (PKCE — eyni brauzerdə açılmalıdır)
+  const { error } = await db.auth.resetPasswordForEmail(parsed.data.email, {
+    redirectTo: `${await requestOrigin()}${ADMIN_AUTH_CALLBACK}`,
+  });
+  if (error) console.error("Şifrə bərpası:", error.message);
   // E-poçtun mövcudluğunu bildirmirik
   return {
     status: "success",
