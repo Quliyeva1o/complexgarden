@@ -2,6 +2,7 @@ import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
+import { connection } from "next/server";
 import { supabasePublicEnv } from "./env";
 
 /**
@@ -11,6 +12,8 @@ import { supabasePublicEnv } from "./env";
 export async function createServerSupabase(): Promise<SupabaseClient> {
   const env = supabasePublicEnv();
   if (!env) throw new Error("NEXT_PUBLIC_SUPABASE_URL / _PUBLISHABLE_KEY təyin olunmayıb");
+  // Sessiya hər sorğuda oxunur; Supabase klienti daxildə Date.now() istifadə edir — prerender olunmamalıdır
+  await connection();
   const store = await cookies();
   return createServerClient(env.url, env.key, {
     cookies: {
