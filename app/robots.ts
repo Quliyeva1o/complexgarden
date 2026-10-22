@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", ...privatePaths.flatMap((p) => ["az", "ru", "en"].map((l) => `/${l}/${p}`))],
+      disallow: ["/api/", "/admin", ...privatePaths.flatMap((p) => ["az", "ru", "en"].map((l) => `/${l}/${p}`))],
     },
     sitemap: `${siteConfig.url}/sitemap.xml`,
   };
