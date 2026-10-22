@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "seed": "tsx --env-file=.env.local scripts/seed-supabase.ts",
-    "check:rls": "tsx --env-file=.env.local scripts/check-rls.ts"
+    "check:rls": "tsx --env-file=.env.local scripts/check-rls.ts",
+    "admin:invite": "tsx --env-file=.env.local scripts/admin-invite.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
